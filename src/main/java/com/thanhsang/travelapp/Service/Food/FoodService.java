@@ -82,6 +82,18 @@ public class FoodService {
             );
     }
 
+    public ResponseEntity<ResponseObject> findById(String id) throws Exception {
+        Optional<FoodModel> foundFood = foodRepo.findById(id);
+        return foundFood.isPresent() ?
+            ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundFood)
+            )
+            :
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new FoodModel())
+            );
+    }
+
     public ResponseEntity<ResponseObject> insert(FoodModel food) throws Exception {
         Optional<FoodModel> foundFood = foodRepo.findById(food.getId());
         if(foundFood.isEmpty() && food.checkValid()) {
@@ -92,7 +104,7 @@ public class FoodService {
             );
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new FoodModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, food)
         );
     }
 
@@ -108,7 +120,7 @@ public class FoodService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new FoodModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, food)
         );
     }
 

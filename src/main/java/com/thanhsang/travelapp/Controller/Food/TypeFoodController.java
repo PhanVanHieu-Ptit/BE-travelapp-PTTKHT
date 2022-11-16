@@ -20,6 +20,8 @@ import com.thanhsang.travelapp.Service.Food.TypeFoodService;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Food.TypeFoodModel;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/typefoods")
 public class TypeFoodController {
@@ -27,6 +29,7 @@ public class TypeFoodController {
     @Autowired TypeFoodService typeFoodService;
     private MessageResponse messageResponse = new MessageResponse();
 
+    @ApiOperation(value = "Get all types_food", notes = "")
     @GetMapping(path = "")
     public ResponseEntity<ResponseObject> findAll() {
         try {
@@ -38,6 +41,7 @@ public class TypeFoodController {
         }
     }
 
+    @ApiOperation(value = "Insert a type_food", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> insert(@RequestBody TypeFoodModel typeFood) {
@@ -45,11 +49,12 @@ public class TypeFoodController {
             return typeFoodService.insert(typeFood);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new TypeFoodModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, typeFood)
             );
         }
     } 
 
+    @ApiOperation(value = "Update a types_food", notes = "")
     @PatchMapping(path = "/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable("id") String id, @RequestParam(name = "_name", required = true) String name) {

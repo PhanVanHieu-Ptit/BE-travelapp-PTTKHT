@@ -20,6 +20,8 @@ import com.thanhsang.travelapp.Service.Service.ServiceService;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Service.ServiceModel;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/services")
 public class ServiceController {
@@ -34,6 +36,8 @@ public class ServiceController {
      * @param size
      * @return
      */
+    @ApiOperation(value = "Get all services for customer as per _type, _sort, _page, _size", 
+                notes = "_type=['ALL' + id of get all type service], _sort=['ALL' + 'star':descending + 'price':ascending], _page&_size=[0, 1, 2,...]")
     @GetMapping("")
     public ResponseEntity<ResponseObject> findAll(
         @RequestParam(name ="_type", required = true) String type, 
@@ -57,6 +61,8 @@ public class ServiceController {
      * @param size
      * @return
      */
+    @ApiOperation(value = "Get all services for manager(admin, business) as per _type, _sort, _page, _size", 
+                notes = "_type=['ALL' + id of get all type service], _sort=['ALL' + 'star':descending + 'price':ascending], _page&_size=[0, 1, 2,...]")
     @GetMapping("/manager")
     public ResponseEntity<ResponseObject> findAllForManager(
         @RequestParam(name ="_type", required = true) String type, 
@@ -73,6 +79,7 @@ public class ServiceController {
         }
     }
 
+    @ApiOperation(value = "Insert a service", notes = "")
     @PostMapping("")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> insert(@RequestBody ServiceModel service) {
@@ -81,11 +88,12 @@ public class ServiceController {
             return serviceService.insert(service);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.INSERT_FAILED, new ServiceModel())
+                new ResponseObject("failed", messageResponse.INSERT_FAILED, service)
             );
         }
     }
 
+    @ApiOperation(value = "Update a service by id", notes = "")
     @PatchMapping("/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable("id") String id, @RequestBody ServiceModel service) {
@@ -94,11 +102,12 @@ public class ServiceController {
             return serviceService.update(id, service);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new ServiceModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, service)
             );
         }
     }
 
+    @ApiOperation(value = "Update state a service by id", notes = "")
     @PatchMapping("/{id}/activity")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> updateActivity(@PathVariable("id") String id) {

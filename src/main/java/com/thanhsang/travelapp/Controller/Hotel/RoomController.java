@@ -19,6 +19,8 @@ import com.thanhsang.travelapp.Service.Hotel.RoomService;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Hotel.RoomModel;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/rooms")
 public class RoomController {
@@ -26,6 +28,7 @@ public class RoomController {
     @Autowired RoomService roomService;
     private MessageResponse messageResponse = new MessageResponse();
 
+    @ApiOperation(value = "Get a Room by id", notes = "")
     @GetMapping(path = "/{id}")
     public ResponseEntity<ResponseObject> findById(@PathVariable(name = "id") String id) {
         try {
@@ -37,6 +40,7 @@ public class RoomController {
         }
     }
 
+    @ApiOperation(value = "Get all Room by id_hotel", notes = "")
     @GetMapping(path = "/hotel/{idHotel}")
     public ResponseEntity<ResponseObject> findAllByIdHotel(@PathVariable(name = "idHotel") String idHotel) {
         try {
@@ -48,6 +52,7 @@ public class RoomController {
         }
     }
 
+    @ApiOperation(value = "Get all Room by id_hotel (for business)", notes = "")
     @GetMapping(path = "/hotel/{idHotel}/bussiness")
     public ResponseEntity<ResponseObject> findAllByIdHotelForBusiness(@PathVariable(name = "idHotel") String idHotel) {
         try {
@@ -59,6 +64,7 @@ public class RoomController {
         }
     }
 
+    @ApiOperation(value = "Insert a Room", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> insert(@RequestBody RoomModel room) {
@@ -66,11 +72,12 @@ public class RoomController {
             return roomService.insert(room);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.INSERT_FAILED, new RoomModel())
+                new ResponseObject("failed", messageResponse.INSERT_FAILED, room)
             );
         }
     }
 
+    @ApiOperation(value = "Update a Room by id", notes = "")
     @PatchMapping(path = "/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable(name = "id") String id, @RequestBody RoomModel room) {
@@ -78,7 +85,7 @@ public class RoomController {
             return roomService.update(id, room);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new RoomModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, room)
             );
         }
     }

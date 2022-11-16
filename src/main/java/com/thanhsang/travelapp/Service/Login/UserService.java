@@ -31,7 +31,7 @@ public class UserService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new UserModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, user)
         );
     }
 
@@ -48,7 +48,7 @@ public class UserService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new UserModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, user)
         );
     }
 }

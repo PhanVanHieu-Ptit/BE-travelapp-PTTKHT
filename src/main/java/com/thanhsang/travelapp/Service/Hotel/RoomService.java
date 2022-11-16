@@ -67,7 +67,7 @@ public class RoomService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new RoomModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, room)
         );
     }
 
@@ -82,7 +82,7 @@ public class RoomService {
             );
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new RoomModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, room)
         );
     }
 

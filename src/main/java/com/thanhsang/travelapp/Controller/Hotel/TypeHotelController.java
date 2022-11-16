@@ -20,6 +20,8 @@ import com.thanhsang.travelapp.Service.Hotel.typeHotelService;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Hotel.TypeHotelModel;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/typehotels")
 public class TypeHotelController {
@@ -27,7 +29,8 @@ public class TypeHotelController {
     @Autowired typeHotelService typeHotelService;
     private MessageResponse messageResponse = new MessageResponse();
 
-    
+
+    @ApiOperation(value = "Get all types_hotel", notes = "")
     @GetMapping(path = "")
     public ResponseEntity<ResponseObject> findAll() {
         try {
@@ -39,6 +42,7 @@ public class TypeHotelController {
         }
     }
 
+    @ApiOperation(value = "Insert a types_hotel", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> insert(@RequestBody TypeHotelModel typeHotel) {
@@ -46,11 +50,12 @@ public class TypeHotelController {
             return typeHotelService.insert(typeHotel);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new TypeHotelModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, typeHotel)
             );
         }
     } 
 
+    @ApiOperation(value = "Update a type_hotel", notes = "")
     @PatchMapping(path = "/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable("id") String id, @RequestParam(name = "_name", required = true) String name) {

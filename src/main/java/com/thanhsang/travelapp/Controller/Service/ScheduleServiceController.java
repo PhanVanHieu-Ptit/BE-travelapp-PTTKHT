@@ -17,6 +17,8 @@ import com.thanhsang.travelapp.Service.Service.ScheduleServiceService;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Service.ScheduleModel;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/scheduleservice")
 public class ScheduleServiceController {
@@ -24,6 +26,7 @@ public class ScheduleServiceController {
     @Autowired ScheduleServiceService scheduleServiceService;
     private MessageResponse messageResponse = new MessageResponse();
 
+    @ApiOperation(value = "Get a Schedule Service by Id", notes = "")
     @GetMapping(path = "/{id}")
     public ResponseEntity<ResponseObject> findById(@PathVariable("id") String id) {
         try {
@@ -35,6 +38,7 @@ public class ScheduleServiceController {
         }
     }
 
+    @ApiOperation(value = "Get all Schedules Service by Id Service (for business)", notes = "")
     @GetMapping(path = "/idservice/{idService}/business")
     public ResponseEntity<ResponseObject> findAllByIdServiceForBusiness(@PathVariable("idService") String idService) {
         try {
@@ -46,6 +50,7 @@ public class ScheduleServiceController {
         }
     }
 
+    @ApiOperation(value = "Get all Schedules Service by Id Service (for customer)", notes = "")
     @GetMapping(path = "/idservice/{idService}")
     public ResponseEntity<ResponseObject> findAllByIdService(@PathVariable("idService") String idService) {
         try {
@@ -57,6 +62,7 @@ public class ScheduleServiceController {
         }
     }
 
+    @ApiOperation(value = "Insert a Schedule Service", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> insert(@RequestBody ScheduleModel schedule) {
@@ -64,11 +70,12 @@ public class ScheduleServiceController {
             return scheduleServiceService.insert(schedule);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.INSERT_FAILED, new ScheduleModel())
+                new ResponseObject("failed", messageResponse.INSERT_FAILED, schedule)
             );
         }
     }
 
+    @ApiOperation(value = "Update state a Schedule Service by Id Service (for customer)", notes = "")
     @PatchMapping(path = "/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable("id") String id, @RequestBody ScheduleModel schedule) {
@@ -76,7 +83,7 @@ public class ScheduleServiceController {
             return scheduleServiceService.update(id, schedule);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new ScheduleModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, schedule)
             );
         }
     }

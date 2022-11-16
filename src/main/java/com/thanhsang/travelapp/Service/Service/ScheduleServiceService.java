@@ -65,7 +65,7 @@ public class ScheduleServiceService {
             );
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new ScheduleModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, schedule)
         );
     }
 
@@ -80,7 +80,7 @@ public class ScheduleServiceService {
             );
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new ScheduleModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, schedule)
         );
     }
 }

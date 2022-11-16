@@ -21,6 +21,8 @@ import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Hotel.HotelModel;
 import com.thanhsang.travelapp.repository.Hotel.HotelRepo;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/api/v1/hotels")
 public class HotelController {
@@ -36,6 +38,8 @@ public class HotelController {
      * @param size
      * @return
      */
+    @ApiOperation(value = "Get all hotels as per _type, _sort, _page, _size", 
+    notes = "_type=['ALL' + id of get all types hotel], _sort=['ALL' + 'star':descending + 'priceMax':descending + 'priceMin':ascending], _page&_size=[0, 1, 2,...]")
     @GetMapping("")
     public ResponseEntity<ResponseObject> findAll(
         @RequestParam(name ="_type", required = true) String type, 
@@ -59,6 +63,8 @@ public class HotelController {
      * @param size
      * @return
      */
+    @ApiOperation(value = "Get all hotels for manager(admin, business) as per _type, _sort, _page, _size", 
+    notes = "_type=['ALL' + id of get all types hotel], _sort=['ALL' + 'star':descending + 'priceMax':descending + 'priceMin':ascending], _page&_size=[0, 1, 2,...]")
     @GetMapping("/admin")
     public ResponseEntity<ResponseObject> findAllForManager(
         @RequestParam(name ="_type", required = true) String type, 
@@ -75,11 +81,12 @@ public class HotelController {
         }
     }
 
-    @PostMapping("")
+    @ApiOperation(value = "Get a Hotel by id", notes = "")
+    @GetMapping("{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
-    public ResponseEntity<ResponseObject> insert(@RequestBody HotelModel hotel) {
+    public ResponseEntity<ResponseObject> findById(@PathVariable("id") String id) throws Exception {
         try {
-            return hotelService.insert(hotel);
+            return hotelService.findById(id);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 new ResponseObject("failed", messageResponse.INSERT_FAILED, new HotelModel())
@@ -87,6 +94,20 @@ public class HotelController {
         }
     }
 
+    @ApiOperation(value = "Insert a Hotel", notes = "")
+    @PostMapping("")
+    @Transactional(rollbackFor = {Exception.class, Throwable.class})
+    public ResponseEntity<ResponseObject> insert(@RequestBody HotelModel hotel) {
+        try {
+            return hotelService.insert(hotel);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ResponseObject("failed", messageResponse.INSERT_FAILED, hotel)
+            );
+        }
+    }
+
+    @ApiOperation(value = "Update a Hotel", notes = "")
     @PatchMapping("/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable("id") String id, @RequestBody HotelModel hotel) {
@@ -94,11 +115,12 @@ public class HotelController {
             return hotelService.update(id, hotel);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new HotelModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, hotel)
             );
         }
     }
 
+    @ApiOperation(value = "Update state Hotel by id", notes = "")
     @PatchMapping("/{id}/activity")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> updateActivity(@PathVariable("id") String id) {

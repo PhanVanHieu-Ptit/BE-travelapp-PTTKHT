@@ -96,7 +96,7 @@ public class ServiceService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new ServiceModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, service)
         );
     }
     
@@ -114,7 +114,7 @@ public class ServiceService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new ServiceModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, service)
         );
     }
 

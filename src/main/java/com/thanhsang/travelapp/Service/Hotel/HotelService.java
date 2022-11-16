@@ -89,6 +89,18 @@ public class HotelService {
             );
     }
 
+    public ResponseEntity<ResponseObject> findById(String id) throws Exception{
+        Optional<HotelModel> foundHotel = hotelRepo.findById(id);
+        return foundHotel.isEmpty() ?
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundHotel)
+            )
+            :
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new HotelModel())
+            );
+    }
+
     public ResponseEntity<ResponseObject> insert(HotelModel hotel) throws Exception{
         Optional<HotelModel> foundHotel = hotelRepo.findById(hotel.getId());
         if(foundHotel.isEmpty() && hotel.checkValid()) {
@@ -99,7 +111,7 @@ public class HotelService {
             );
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new HotelModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, hotel)
         );
     }
 
@@ -115,7 +127,7 @@ public class HotelService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new HotelModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, hotel)
         );
     }
 

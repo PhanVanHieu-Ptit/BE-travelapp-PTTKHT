@@ -19,6 +19,8 @@ import com.thanhsang.travelapp.Service.Food.DishService;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Food.DishModel;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/dishs")
 public class DishController {
@@ -26,8 +28,9 @@ public class DishController {
     @Autowired DishService dishService;
     private MessageResponse messageResponse = new MessageResponse();
 
-    @GetMapping(path = "/idfood/{id}")
-    public ResponseEntity<ResponseObject> findAll(@PathVariable("id") String id) {
+    @ApiOperation(value = "Get all dishs by id_food", notes = "")
+    @GetMapping(path = "/idfood/{id_food}")
+    public ResponseEntity<ResponseObject> findAllByIdFood(@PathVariable("id_food") String id) {
         try {
             return dishService.findAllByIdFood(id);
         } catch (Exception e) {
@@ -37,6 +40,19 @@ public class DishController {
         }
     }
 
+    @ApiOperation(value = "Get a dish by id", notes = "")
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ResponseObject> findById(@PathVariable("id") String id) {
+        try {
+            return dishService.findById(id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new DishModel())
+            );
+        }
+    }
+
+    @ApiOperation(value = "Insert a dish", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> insert(@RequestBody DishModel dish) {
@@ -44,11 +60,12 @@ public class DishController {
             return dishService.insert(dish);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new DishModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, dish)
             );
         }
     } 
 
+    @ApiOperation(value = "Update a dish by id", notes = "")
     @PatchMapping(path = "/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable("id") String id, @RequestBody DishModel dish) {
@@ -56,7 +73,7 @@ public class DishController {
             return dishService.update(id, dish);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new DishModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, dish)
             );
         }
     } 

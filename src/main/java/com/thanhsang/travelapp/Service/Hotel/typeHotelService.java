@@ -43,7 +43,7 @@ public class typeHotelService {
             );
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new TypeHotelModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, typeHotel)
         );
     }
 

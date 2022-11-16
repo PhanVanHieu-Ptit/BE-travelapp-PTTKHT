@@ -20,6 +20,8 @@ import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Login.UserModel;
 import com.thanhsang.travelapp.repository.Login.UserRepo;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/users")
 public class UserController {
@@ -28,8 +30,9 @@ public class UserController {
     @Autowired UserService userService;
     private MessageResponse messageResponse = new MessageResponse();
     
+    @ApiOperation(value = "Get a User by id social", notes = "")
     @GetMapping(path = "/{idSocial}")
-    public ResponseEntity<ResponseObject> getByIdSocial(@PathVariable String idSocial) {
+    public ResponseEntity<ResponseObject> findByIdSocial(@PathVariable String idSocial) {
         try {
             Optional<UserModel> user = userRepo.findByIdSocial(idSocial);
             return user.isPresent() ?
@@ -48,6 +51,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Insert a User", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> insert(@RequestBody UserModel user) {
@@ -55,11 +59,12 @@ public class UserController {
             return userService.insert(user);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.INSERT_FAILED, new UserModel())
+                new ResponseObject("failed", messageResponse.INSERT_FAILED, user)
             );
         }
     }
 
+    @ApiOperation(value = "update a User by id", notes = "")
     @PatchMapping(path = "/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable String id, @RequestBody UserModel user) {
@@ -67,7 +72,7 @@ public class UserController {
             return userService.update(id, user);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new UserModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, user)
             );
         }
     }

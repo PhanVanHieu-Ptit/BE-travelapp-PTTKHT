@@ -51,7 +51,7 @@ public class MembershipService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new MembershipModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, membership)
         );
     }
 
@@ -67,7 +67,7 @@ public class MembershipService {
         }
 
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new MembershipModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, member)
         );
     }
 

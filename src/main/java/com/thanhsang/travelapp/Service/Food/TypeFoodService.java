@@ -42,7 +42,7 @@ public class TypeFoodService {
             );
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new TypeFoodModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, typeFood)
         );
     }
 

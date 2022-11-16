@@ -21,6 +21,8 @@ import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Food.FoodModel;
 import com.thanhsang.travelapp.repository.Food.FoodRepo;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/foods")
 public class FoodController {
@@ -36,6 +38,8 @@ public class FoodController {
      * @param size
      * @return
      */
+    @ApiOperation(value = "Get all foods for customer as per _type, _sort, _page, _size", 
+    notes = "_type=['ALL' + id of get all types food], _sort=['ALL' + 'star':descending], _page&_size=[0, 1, 2,...]")
     @GetMapping("")
     public ResponseEntity<ResponseObject> findAll(
         @RequestParam(name ="_type", required = true) String type, 
@@ -59,6 +63,8 @@ public class FoodController {
      * @param size
      * @return
      */
+    @ApiOperation(value = "Get all foods for manager(admin, business) as per _type, _sort, _page, _size", 
+    notes = "_type=['ALL' + id of get all types food], _sort=['ALL' + 'star':descending], _page&_size=[0, 1, 2,...]")
     @GetMapping("/admin")
     public ResponseEntity<ResponseObject> findAllForManager(
         @RequestParam(name ="_type", required = true) String type, 
@@ -71,6 +77,18 @@ public class FoodController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ResponseObject("failed", messageResponse.SELECT_FAILED, new ArrayList<>())
+            );
+        }
+    }
+
+    @GetMapping("{id}")
+    @Transactional(rollbackFor = {Exception.class, Throwable.class})
+    public ResponseEntity<ResponseObject> findById(@PathVariable("id") String id) {
+        try {
+            return foodService.findById(id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new FoodModel())
             );
         }
     }

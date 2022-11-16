@@ -20,6 +20,8 @@ import com.thanhsang.travelapp.Service.Service.TypeServiceService;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Service.TypeServiceModel;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(path = "/api/v1/typeservices")
 public class TypeServiceController {
@@ -27,6 +29,7 @@ public class TypeServiceController {
     @Autowired TypeServiceService typeServiceService;
     private MessageResponse messageResponse = new MessageResponse();
 
+    @ApiOperation(value = "Get all type services", notes = "")
     @GetMapping(path = "")
     public ResponseEntity<ResponseObject> findAll() {
         try {
@@ -38,6 +41,7 @@ public class TypeServiceController {
         }
     }
 
+    @ApiOperation(value = "Insert a type service", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> insert(@RequestBody TypeServiceModel typeService) {
@@ -45,11 +49,12 @@ public class TypeServiceController {
             return typeServiceService.insert(typeService);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.UPDATE_FAILED, new TypeServiceModel())
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, typeService)
             );
         }
     }
 
+    @ApiOperation(value = "Update a type service by id", notes = "")
     @PatchMapping(path = "/{id}")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<ResponseObject> update(@PathVariable("id") String id, @RequestParam(name = "_name", required = true) String name) {

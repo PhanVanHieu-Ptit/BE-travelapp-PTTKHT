@@ -1,5 +1,7 @@
 package com.thanhsang.travelapp.Service.Login;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +31,18 @@ public class RoleService {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ResponseObject("failed", messageResponse.SELECT_FAILED, new RoleModel())
             );
-    }}
+    }
+
+    public ResponseEntity<ResponseObject> findAll() throws Exception {
+        List<RoleModel> roles = roleRepo.findAll();
+
+        return !roles.isEmpty() ?
+            ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, roles)
+            )
+            :
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new ArrayList<>())
+            );
+    }
+}

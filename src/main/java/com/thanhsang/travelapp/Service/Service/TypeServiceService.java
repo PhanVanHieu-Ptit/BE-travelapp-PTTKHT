@@ -43,7 +43,7 @@ public class TypeServiceService {
             );
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new TypeServiceModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, typeService)
         );
     }
 

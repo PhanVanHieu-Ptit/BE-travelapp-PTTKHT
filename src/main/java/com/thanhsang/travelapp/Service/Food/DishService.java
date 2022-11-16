@@ -21,6 +21,18 @@ public class DishService {
     @Autowired DishRepo dishRepo;
     private MessageResponse messageResponse = new MessageResponse();
 
+    public ResponseEntity<ResponseObject> findById(String id) throws Exception {
+        Optional<DishModel> foundDish = dishRepo.findById(id);
+        return foundDish.isPresent() ?
+            ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundDish)
+            )
+            :
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new DishModel())
+            );
+    }
+    
     public ResponseEntity<ResponseObject> findAllByIdFood(String idFood) throws Exception {
         List<DishModel> foundDish = dishRepo.findAllByIdFood(idFood);
         return !foundDish.isEmpty() ?
@@ -29,7 +41,7 @@ public class DishService {
             )
             :
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("success", messageResponse.SELECT_FAILED, new ArrayList<>())
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new ArrayList<>())
             );
     }
 
@@ -43,7 +55,7 @@ public class DishService {
             );
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new DishModel())
+            new ResponseObject("failed", messageResponse.INSERT_FAILED, dish)
         );
     }
 
@@ -58,7 +70,7 @@ public class DishService {
             );
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new DishModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, dish)
         );
     }
 }
