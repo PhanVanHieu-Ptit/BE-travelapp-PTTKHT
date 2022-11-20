@@ -8,6 +8,8 @@ public class MessageResponse {
     public final String UPDATE_FAILED = "Cập nhật thất bại";
     public final String INSERT_SUCCESS = "Thêm mới thành công";
     public final String INSERT_FAILED = "Thêm thất bại";
+    public final String DELETE_SUCCESS = "Xóa thành công";
+    public final String DELETE_FAILED = "Xóa thất bại";
 
     public MessageResponse() {}
 }

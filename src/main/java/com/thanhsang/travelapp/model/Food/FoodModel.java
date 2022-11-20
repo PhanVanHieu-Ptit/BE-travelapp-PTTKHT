@@ -31,7 +31,7 @@ public class FoodModel {
     @Column(name = "latitude", nullable = false)
     private double latitude;
     @Column(name = "star", nullable = false)
-    private int star;
+    private double star;
     @Column(name = "number_rating", nullable = false)
     private int numberRating;
     @Column(name = "activity", nullable = false)
@@ -40,7 +40,7 @@ public class FoodModel {
     public FoodModel() {}
 
     public FoodModel(String id, String idTypeFood, String idMembership, String name, String address, String phone,
-            String avatar, String description, double longiture, double latitude, int star, boolean activity, int numberRating) {
+            String avatar, String description, double longiture, double latitude, double star, boolean activity, int numberRating) {
         this.id = id;
         this.idTypeFood = idTypeFood;
         this.idMembership = idMembership;
@@ -96,7 +96,7 @@ public class FoodModel {
         this.latitude = latitude;
     }
 
-    public void setStar(int star) {
+    public void setStar(double star) {
         this.star = star;
     }
 
@@ -146,7 +146,7 @@ public class FoodModel {
         return latitude;
     }
 
-    public int getStar() {
+    public double getStar() {
         return star;
     }
 

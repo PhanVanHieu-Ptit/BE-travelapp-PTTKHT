@@ -1,6 +1,7 @@
 package com.thanhsang.travelapp.Service.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,5 +133,18 @@ public class ServiceService {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             new ResponseObject("failed", messageResponse.INSERT_FAILED, new ServiceModel())
         );
+    }
+
+    public ResponseEntity<ResponseObject> findTop10() {
+        List<ServiceModel> foundService = serviceRepo.findTop10ByOrderByStarDesc();
+
+        return !foundService.isEmpty() ?
+            ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundService)
+            )
+            :
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, foundService)
+            );
     }
 }

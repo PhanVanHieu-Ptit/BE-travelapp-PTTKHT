@@ -120,4 +120,16 @@ public class ServiceController {
             );
         }
     }
+
+    @GetMapping(path = "/top10")
+    public ResponseEntity<ResponseObject> findTop10ByStarDesc() {
+        try {
+            return serviceService.findTop10();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new ArrayList<>())
+            );
+        }
+    }
+
 }

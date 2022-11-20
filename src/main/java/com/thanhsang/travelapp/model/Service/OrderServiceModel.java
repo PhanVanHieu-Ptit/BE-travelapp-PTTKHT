@@ -34,6 +34,8 @@ public class OrderServiceModel {
     private int price;
     @Column(name = "phone_customer", nullable = false, length = 255)
     private String phone;
+    @Column(name = "id_service", nullable = false, length = 255)
+    private String idService;
     @Column(name = "star", nullable = true)
     private int star;
     @Column(name = "comment", nullable = true, length = 255)
@@ -42,7 +44,7 @@ public class OrderServiceModel {
     public OrderServiceModel() {}
 
     public OrderServiceModel(int id, String idUser, String idState, String idSchedule, Timestamp dateNow,
-        Date dateStart, int number, int price, String phone, int star, String comment) {
+        Date dateStart, int number, int price, String phone, int star, String comment, String idService) {
         this.id = id;
         this.idUser = idUser;
         this.idState = idState;
@@ -54,6 +56,7 @@ public class OrderServiceModel {
         this.phone = phone;
         this.star = star;
         this.comment = comment;
+        this.idService = idService;
     }
 
     public void setId(int id) {
@@ -142,6 +145,14 @@ public class OrderServiceModel {
 
     public String getComment() {
         return comment;
+    }
+
+    public void setIdService(String idService) {
+        this.idService = idService;
+    }
+
+    public String getIdService() {
+        return idService;
     }
 
     

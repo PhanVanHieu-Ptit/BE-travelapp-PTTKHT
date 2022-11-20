@@ -1,6 +1,7 @@
 package com.thanhsang.travelapp.Service.Food;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,5 +139,18 @@ public class FoodService {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             new ResponseObject("failed", messageResponse.UPDATE_FAILED, new FoodModel())
         );
+    }
+
+    public ResponseEntity<ResponseObject> findTop10() {
+        List<FoodModel> foundFoods = foodRepo.findTop10ByOrderByStarDesc();
+
+        return !foundFoods.isEmpty() ?
+            ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundFoods)
+            )
+            :
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, foundFoods)
+            );
     }
 }

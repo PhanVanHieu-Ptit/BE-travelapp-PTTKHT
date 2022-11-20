@@ -33,7 +33,7 @@ public class ServiceModel {
     @Column(name = "description", nullable = false, length = 512)
     private String description;
     @Column(name = "star", nullable = false)
-    private int star;
+    private double star;
     @Column(name = "number_rating", nullable = false)
     private int numberRating;
     @Column(name = "activity", nullable = false)
@@ -42,7 +42,7 @@ public class ServiceModel {
     public ServiceModel() {}
 
     public ServiceModel(String id, String idTypeService, String idMembership, String name, String unit, int price,
-            int number, String phone, String avatar, String pictures, String description, int star, boolean activity, int numberRating) {
+            int number, String phone, String avatar, String pictures, String description, double star, int numberRating, boolean activity) {
         this.id = id;
         this.idTypeService = idTypeService;
         this.idMembership = idMembership;
@@ -103,7 +103,7 @@ public class ServiceModel {
         this.description = description;
     }
 
-    public void setStar(int star) {
+    public void setStar(double star) {
         this.star = star;
     }
 
@@ -159,7 +159,7 @@ public class ServiceModel {
         return description;
     }
 
-    public int getStar() {
+    public double getStar() {
         return star;
     }
 
@@ -194,4 +194,5 @@ public class ServiceModel {
     public void changeActivity() {
         this.setActivity(!this.activity);
     }
+
 }

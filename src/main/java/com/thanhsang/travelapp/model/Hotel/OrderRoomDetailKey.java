@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class OrderRoomDetailKey implements Serializable{
     
     private int idOrder;
-    private int idRoom;
+    private String idRoom;
 
     public OrderRoomDetailKey() {}
 
-    public OrderRoomDetailKey(int idOrder, int idRoom) {
+    public OrderRoomDetailKey(int idOrder, String idRoom) {
         this.idOrder = idOrder;
         this.idRoom = idRoom;
     }
@@ -18,7 +18,7 @@ public class OrderRoomDetailKey implements Serializable{
         this.idOrder = idOrder;
     }
 
-    public void setIdRoom(int idRoom) {
+    public void setIdRoom(String idRoom) {
         this.idRoom = idRoom;
     }
 
@@ -26,7 +26,7 @@ public class OrderRoomDetailKey implements Serializable{
         return idOrder;
     }
 
-    public int getIdRoom() {
+    public String getIdRoom() {
         return idRoom;
     }
 

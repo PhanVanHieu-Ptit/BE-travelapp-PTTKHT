@@ -30,6 +30,8 @@ public class OrderFoodModel {
     private String phone;
     @Column(name = "note", nullable = true, length = 255)
     private String note;
+    @Column(name = "id_food", nullable = true, length = 255)
+    private String idFood;
     @Column(name = "star", nullable = true)
     private int star;
     @Column(name = "comment", nullable = true, length = 255)
@@ -38,7 +40,7 @@ public class OrderFoodModel {
     public OrderFoodModel() {}
 
     public OrderFoodModel(int id, String idUser, String idState, Date dateStart, Timestamp dateNow, String phone,
-            String note, int star, String comment) {
+            String note, int star, String comment, String idFood) {
         this.id = id;
         this.idUser = idUser;
         this.idState = idState;
@@ -46,6 +48,7 @@ public class OrderFoodModel {
         this.dateNow = dateNow;
         this.phone = phone;
         this.note = note;
+        this.idFood = idFood;
         this.star = star;
         this.comment = comment;
     }
@@ -120,6 +123,14 @@ public class OrderFoodModel {
 
     public String getComment() {
         return comment;
+    }
+
+    public void setIdFood(String idFood) {
+        this.idFood = idFood;
+    }
+
+    public String getIdFood() {
+        return idFood;
     }
    
 }

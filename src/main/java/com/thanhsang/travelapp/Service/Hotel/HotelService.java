@@ -1,6 +1,7 @@
 package com.thanhsang.travelapp.Service.Hotel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import com.thanhsang.travelapp.Define.MessageResponse;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Hotel.HotelModel;
+import com.thanhsang.travelapp.model.Hotel.RoomModel;
 import com.thanhsang.travelapp.repository.Hotel.HotelRepo;
+import com.thanhsang.travelapp.repository.Hotel.RoomRepo;
 import com.thanhsang.travelapp.repository.Login.MembershipRepo;
 
 @Service
@@ -23,6 +26,8 @@ public class HotelService {
 
     @Autowired HotelRepo hotelRepo;
     @Autowired MembershipRepo membershipRepo;
+    @Autowired RoomRepo roomRepo;
+    @Autowired RoomService roomService;
     private MessageResponse messageResponse = new MessageResponse();
 
     /**
@@ -135,8 +140,12 @@ public class HotelService {
         Optional<HotelModel> foundHotel = hotelRepo.findById(id);
         if(foundHotel.isPresent()) {
             foundHotel.get().setActivity(!foundHotel.get().isActivity());
+            List<RoomModel> foundRoom = roomRepo.findAllByIdHotel(id);
             hotelRepo.save(foundHotel.get());
-
+            for (RoomModel room : foundRoom) {
+                room.setActivity(false);
+                roomRepo.save(room);
+            }
             return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("success", messageResponse.UPDATE_SUCCESS, foundHotel)
             );
@@ -145,5 +154,18 @@ public class HotelService {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             new ResponseObject("failed", messageResponse.UPDATE_FAILED, new HotelModel())
         );
+    }
+
+    public ResponseEntity<ResponseObject> findTop10() {
+        List<HotelModel> foundHotels = hotelRepo.findTop10ByOrderByStarDesc();
+
+        return !foundHotels.isEmpty() ?
+            ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundHotels)
+            )
+            :
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, foundHotels)
+            );
     }
 }

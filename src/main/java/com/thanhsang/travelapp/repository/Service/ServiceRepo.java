@@ -1,5 +1,6 @@
 package com.thanhsang.travelapp.repository.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ public interface ServiceRepo extends JpaRepository<ServiceModel, Integer>{
     Optional<ServiceModel> findById(String idService);
 
     Optional<ServiceModel> findByIdMembership(String idMembership);
+    
     Page<ServiceModel> findAll(Pageable pageable);
 
     Page<ServiceModel> findAllByActivityAndIdTypeService(boolean activity, String idTypeService, Pageable pageable) throws Exception;
@@ -23,6 +25,7 @@ public interface ServiceRepo extends JpaRepository<ServiceModel, Integer>{
 
     Page<ServiceModel> findAllByIdTypeService(String type, Pageable pageable) throws Exception;
 
+    List<ServiceModel> findTop10ByOrderByStarDesc();
     // @Transactional
     // @Modifying
     // @Query(name = "UPDATE Service SET name = ?2, unit ?3, " +

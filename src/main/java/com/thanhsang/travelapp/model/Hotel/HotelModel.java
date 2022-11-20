@@ -31,7 +31,7 @@ public class HotelModel {
     @Column(name = "description", nullable = false, length = 512)
     private String description;
     @Column(name = "star", nullable = false)
-    private int star;
+    private double star;
     @Column(name = "price_min", nullable = false)
     private int priceMin;
     @Column(name = "price_max", nullable = false)
@@ -52,7 +52,7 @@ public class HotelModel {
     }
 
     public HotelModel(String id, String idMembership, String idTypeHotel, String name, String address, String phone,
-            String avatar, double longitude, double latitude, String description, int star, int priceMin, int priceMax, boolean bancol,
+            String avatar, double longitude, double latitude, String description, double star, int priceMin, int priceMax, boolean bancol,
             boolean motobike, boolean clean, boolean wifi, boolean laudry, boolean shuttle, boolean activity, int numberRating) {
         this.id = id;
         this.idMembership = idMembership;
@@ -111,7 +111,7 @@ public class HotelModel {
         this.description = description;
     }
 
-    public void setStar(int star) {
+    public void setStar(double star) {
         this.star = star;
     }
 
@@ -171,7 +171,7 @@ public class HotelModel {
         return description;
     }
 
-    public int getStar() {
+    public double getStar() {
         return star;
     }
 

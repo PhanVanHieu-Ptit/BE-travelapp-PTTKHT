@@ -18,5 +18,6 @@ public interface FoodRepo extends JpaRepository<FoodModel, Integer>{
     Page<FoodModel> findAllByIdTypeFood(String type, Pageable pageable);
     Page<FoodModel> findAllByActivity(boolean activity, Pageable pageable);
     Page<FoodModel> findAllByActivityAndIdTypeFood(boolean activity, String type, Pageable pageable);
+    List<FoodModel> findTop10ByOrderByStarDesc();
 
 }

@@ -1,7 +1,7 @@
 package com.thanhsang.travelapp.model.Hotel;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "order_room")
@@ -23,13 +25,18 @@ public class OrderRoomModel {
     @Column(name = "id_state", nullable = false, length = 255)
     private String idState;
     @Column(name = "date_start", nullable = false)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateStart;
     @Column(name = "date_end", nullable = false)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateEnd;
     @Column(name = "date_now", nullable = false)
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS")
     private Timestamp dateNow;
     @Column(name = "phone_customer", nullable = false, length = 255)
     private String phone;
+    @Column(name = "id_hotel", nullable = true, length = 255)
+    private String idHotel;
     @Column(name = "star", nullable = true)
     private int star;
     @Column(name = "comment", nullable = true, length = 255)
@@ -38,7 +45,7 @@ public class OrderRoomModel {
     public OrderRoomModel() {}
 
     public OrderRoomModel(int id, String idUser, String idState, Date dateStart, Date dateEnd,
-            Timestamp dateNow, String phone, int star, String comment) {
+            Timestamp dateNow, String phone, String idHotel, int star, String comment) {
         this.id = id;
         this.idUser = idUser;
         this.idState = idState;
@@ -46,6 +53,7 @@ public class OrderRoomModel {
         this.dateEnd = dateEnd;
         this.dateNow = dateNow;
         this.phone = phone;
+        this.idHotel = idHotel;
         this.star = star;
         this.comment = comment;
     }
@@ -76,6 +84,10 @@ public class OrderRoomModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setIdHotel(String idHotel) {
+        this.idHotel = idHotel;
     }
 
     public void setStar(int star) {
@@ -112,6 +124,10 @@ public class OrderRoomModel {
 
     public String getPhone() {
         return phone;
+    }
+
+    public String getIdHotel() {
+        return idHotel;
     }
 
     public int getStar() {

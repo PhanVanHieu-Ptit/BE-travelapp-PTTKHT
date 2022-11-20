@@ -18,4 +18,6 @@ public interface HotelRepo extends JpaRepository<HotelModel, Integer>{
     Page<HotelModel> findAllByIdTypeHotel(String type, Pageable pageable);
     Page<HotelModel> findAllByActivity(boolean activity, Pageable pageable);
     Page<HotelModel> findAllByActivityAndIdTypeHotel(boolean activity, String type, Pageable pageable);
+    List<HotelModel> findTop10ByOrderByStarDesc();
+
 }
