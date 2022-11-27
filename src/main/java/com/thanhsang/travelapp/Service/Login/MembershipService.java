@@ -113,7 +113,7 @@ public class MembershipService {
             )
             :
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("success", messageResponse.SELECT_FAILED, new MembershipModel())
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new MembershipModel())
             );
     }
 
