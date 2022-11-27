@@ -148,8 +148,8 @@ public class MembershipController {
 
     @ApiOperation(value = "Login a membership", notes = "")
     @PostMapping(path = "/login")
-    public ResponseEntity<ResponseObject> login(@RequestParam(name = "username", required = true) String username,
-                                                @PathVariable(name = "password", required = true) String password) {
+    public ResponseEntity<ResponseObject> login(@RequestParam(name = "_username", required = true) String username,
+                                                @RequestParam(name = "_password", required = true) String password) {
         try {
             return membershipService.loginMembership(username, password);
         } catch (Exception e) {
