@@ -103,7 +103,7 @@ public class ServiceService {
     
     public ResponseEntity<ResponseObject> update(String id, ServiceModel service) throws Exception{
         if(service.checkValid() && id.equals(service.getId())) {
-            Optional<ServiceModel> foundService = serviceRepo.findByIdMembership(id);
+            Optional<ServiceModel> foundService = serviceRepo.findById(id);
             if(foundService.isPresent()) {
                 foundService.get().changeValid(service);
                 serviceRepo.save(foundService.get());
@@ -115,7 +115,7 @@ public class ServiceService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, service)
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, service)
         );
     }
 
