@@ -51,6 +51,27 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Get a User by id user", notes = "")
+    @GetMapping(path = "/{idUser}")
+    public ResponseEntity<ResponseObject> findByIdSocial(@PathVariable String idUser) {
+        try {
+            Optional<UserModel> user = userRepo.findById(idUser);
+            return user.isPresent() ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject("success", messageResponse.SELECT_SUCCESS, user)
+                )
+                :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject("failed", messageResponse.SELECT_FAILED, new UserModel())
+                );
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new UserModel())
+            );
+        }
+    }
+
     @ApiOperation(value = "Insert a User", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
