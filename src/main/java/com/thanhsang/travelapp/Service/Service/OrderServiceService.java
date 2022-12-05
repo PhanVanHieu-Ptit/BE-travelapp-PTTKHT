@@ -137,10 +137,8 @@ public class OrderServiceService {
     public ResponseEntity<ResponseObject> insert(OrderServiceModel orderService) throws Exception {
         Optional<OrderServiceModel> foundOrder = orderServiceRepo.findById(orderService.getId());
         Integer count = orderServiceRepo.findQuantityInStock(orderService.getIdService(), orderService.getIdSchedule(), orderService.getDateStart());
-
-        if(foundOrder.isEmpty() && orderService.getNumber()-count >= 0) {
+        if(foundOrder.isEmpty() && count-orderService.getNumber() >= 0) {
             orderServiceRepo.save(orderService);
-
             return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseObject("success", messageResponse.INSERT_SUCCESS, orderService)
             );
