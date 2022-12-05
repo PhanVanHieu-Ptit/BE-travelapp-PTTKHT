@@ -132,6 +132,7 @@ public class ServiceController {
         }
     }
 
+     @ApiOperation(value = "Find service by id", notes = "")
     @GetMapping(path = "/{id}")
     public ResponseEntity<ResponseObject> findById(@PathVariable("id") String id) {
         try {
