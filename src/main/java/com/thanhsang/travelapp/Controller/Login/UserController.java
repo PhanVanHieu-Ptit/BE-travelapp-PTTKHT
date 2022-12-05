@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Get a User by id user", notes = "")
-    @GetMapping(path = "/{idUser}")
+    @GetMapping(path = "/idUser/{idUser}")
     public ResponseEntity<ResponseObject> findById(@PathVariable String idUser) {
         try {
             Optional<UserModel> user = userRepo.findById(idUser);

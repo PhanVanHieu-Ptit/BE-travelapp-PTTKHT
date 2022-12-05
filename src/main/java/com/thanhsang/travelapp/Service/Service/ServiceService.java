@@ -149,9 +149,9 @@ public class ServiceService {
     }
 
     public ResponseEntity<ResponseObject> findById(String id) {
-        List<ServiceModel> foundService = serviceRepo.findById(id);
+        Optional<ServiceModel> foundService = serviceRepo.findById(id);
 
-        return !foundService.isEmpty() ?
+        return foundService.isPresent() ?
             ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundService)
             )
