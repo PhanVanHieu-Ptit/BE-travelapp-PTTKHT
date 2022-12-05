@@ -53,7 +53,7 @@ public class UserController {
 
     @ApiOperation(value = "Get a User by id user", notes = "")
     @GetMapping(path = "/{idUser}")
-    public ResponseEntity<ResponseObject> findByIdSocial(@PathVariable String idUser) {
+    public ResponseEntity<ResponseObject> findById(@PathVariable String idUser) {
         try {
             Optional<UserModel> user = userRepo.findById(idUser);
             return user.isPresent() ?
