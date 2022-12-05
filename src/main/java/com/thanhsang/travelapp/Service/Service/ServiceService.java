@@ -148,8 +148,8 @@ public class ServiceService {
             );
     }
 
-    public ResponseEntity<ResponseObject> findById() {
-        List<ServiceModel> foundService = serviceRepo.findById();
+    public ResponseEntity<ResponseObject> findById(String id) {
+        List<ServiceModel> foundService = serviceRepo.findById(id);
 
         return !foundService.isEmpty() ?
             ResponseEntity.status(HttpStatus.OK).body(
