@@ -148,4 +148,22 @@ public class OrderServiceService {
             new ResponseObject("failed", messageResponse.INSERT_FAILED, orderService)
         );
     }
+
+    public ResponseEntity<ResponseObject> update(int id, OrderServiceModel orderService) throws Exception{
+        if(id==orderService.getId()) {
+            Optional<OrderServiceModel> foundOrder = orderServiceRepo.findById(orderService.getId());
+            if(foundOrder.isPresent()) {
+                foundOrder.get().changeValid(orderService);
+                orderServiceRepo.save(foundOrder.get());
+
+                return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("success", messageResponse.UPDATE_SUCCESS, foundOrder)
+                );
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, orderService)
+        );
+    }
 }
