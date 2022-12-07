@@ -155,5 +155,13 @@ public class OrderServiceModel {
         return idService;
     }
 
+    public void changeValid(OrderServiceModel orderService) {   
+        this.setIdSchedule(orderService.getIdSchedule());
+        this.setDateStart(orderService.getDateStart());
+        this.setNumber(orderService.getNumber());
+        this.setPrice(orderService.getPrice());
+        this.setPhone(orderService.getPhone());
+        this.setIdService(orderService.getIdService());
+    }
     
 }
