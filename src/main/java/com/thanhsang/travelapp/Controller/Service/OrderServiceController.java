@@ -109,7 +109,7 @@ public class OrderServiceController {
             return orderServiceS.insert(orderService);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new ResponseObject("failed", messageResponse.SELECT_FAILED, new OrderServiceModel())
+                new ResponseObject("failed", messageResponse.INSERT_FAILED, new OrderServiceModel())
             );
         }
     }
