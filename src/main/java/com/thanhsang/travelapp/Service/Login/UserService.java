@@ -21,7 +21,7 @@ public class UserService {
     public ResponseEntity<ResponseObject> insert(UserModel user) throws Exception {
         Optional<UserModel> foundUser = userRepo.findByIdSocial(user.getIdSocial());
 
-        if(user.checkValid() && foundUser.isEmpty() && !foundUser.get().getId().equals(user.getId())) {
+        if(user.checkValid() && foundUser.isEmpty()) {
             user.setIdSocial(user.getIdSocial().toLowerCase());
             userRepo.save(user);
 
