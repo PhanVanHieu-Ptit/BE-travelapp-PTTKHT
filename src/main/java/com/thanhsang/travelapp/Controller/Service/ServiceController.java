@@ -132,4 +132,16 @@ public class ServiceController {
         }
     }
 
+     @ApiOperation(value = "Find service by id", notes = "")
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ResponseObject> findById(@PathVariable("id") String id) {
+        try {
+            return serviceService.findById(id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new ArrayList<>())
+            );
+        }
+    }
+
 }

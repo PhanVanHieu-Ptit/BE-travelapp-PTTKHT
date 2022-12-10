@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import com.thanhsang.travelapp.Service.Service.OrderServiceService;
 import com.thanhsang.travelapp.model.Adds.PageRatingReponse;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Service.OrderServiceModel;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(path = "/api/v1/orderservice")
@@ -71,6 +74,21 @@ public class OrderServiceController {
             );
         }
     }
+
+    @ApiOperation(value = "Update a order by id", notes = "")
+    @PatchMapping("/idOrderService/{id}")
+    @Transactional(rollbackFor = {Exception.class, Throwable.class})
+    public ResponseEntity<ResponseObject> update(@PathVariable("id") int id, @RequestBody OrderServiceModel orderService) {
+
+        try {
+            return orderServiceS.update(id, orderService);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ResponseObject("failed", messageResponse.UPDATE_FAILED, orderService)
+            );
+        }
+    }
+
 
     @PatchMapping(path = "/{id}/rating")
     public ResponseEntity<ResponseObject> updateRating(

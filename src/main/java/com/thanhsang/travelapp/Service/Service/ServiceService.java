@@ -131,7 +131,7 @@ public class ServiceService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ResponseObject("failed", messageResponse.INSERT_FAILED, new ServiceModel())
+            new ResponseObject("failed", messageResponse.UPDATE_FAILED, new ServiceModel())
         );
     }
 
@@ -139,6 +139,19 @@ public class ServiceService {
         List<ServiceModel> foundService = serviceRepo.findTop10ByOrderByStarDesc();
 
         return !foundService.isEmpty() ?
+            ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundService)
+            )
+            :
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, foundService)
+            );
+    }
+
+    public ResponseEntity<ResponseObject> findById(String id) {
+        Optional<ServiceModel> foundService = serviceRepo.findById(id);
+
+        return foundService.isPresent() ?
             ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundService)
             )
