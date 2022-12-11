@@ -40,7 +40,7 @@ public class ImageController {
             return ResponseEntity
                 .status(HttpStatus.CREATED)
                         .body(
-                            new ResponseObject("success", "Thêm hình thành công", data.getId())
+                            new ResponseObject("success", "Thêm hình thành công", "/api/v1/images/"+data.getId())
                         );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
