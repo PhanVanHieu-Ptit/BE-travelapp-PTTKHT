@@ -122,7 +122,7 @@ public class DishModel {
 
     public void update(DishModel dish) {
         this.setName(dish.getName());
-        this.setUnit(dish.getName());
+        this.setUnit(dish.getUnit());
         this.setPrice(dish.getPrice());
         this.setAvatar(dish.getAvatar());
         this.setActivity(dish.isActivity());

@@ -90,7 +90,6 @@ public class OrderFoodService {
             OrderFoodModel saveOrder = orderFoodRepo.save(order.getOrder());
             idOrder = saveOrder.getId();
             for (OrderFoodDetailModel ord : order.getOrderDetail()) ord.setIdOrder(saveOrder.getId());
-            
             return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseObject("success", messageResponse.INSERT_SUCCESS, order)
             );
