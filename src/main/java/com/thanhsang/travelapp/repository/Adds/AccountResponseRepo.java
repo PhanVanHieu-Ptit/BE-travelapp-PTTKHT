@@ -1,4 +1,4 @@
-package com.thanhsang.travelapp.repository.Login;
+package com.thanhsang.travelapp.repository.Adds;
 
 import java.util.Optional;
 
@@ -7,14 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.thanhsang.travelapp.model.Adds.AccountResponse;
-import com.thanhsang.travelapp.model.Login.UserModel;
 
 @Repository
-public interface UserRepo extends JpaRepository<UserModel, Integer>{
+public interface AccountResponseRepo extends JpaRepository<AccountResponse, String>{
     
-    public Optional<UserModel> findById(String id);
-    public Optional<UserModel> findByIdSocial(String idSocial);
-
     @Query(value = "SELECT id_user id, 'Khách hàng' role, first_name, last_name, phone, sex, avatar "+
                    "FROM users WHERE id_user = ?1 "+
                    "UNION ALL " +
