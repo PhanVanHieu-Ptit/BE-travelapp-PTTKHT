@@ -15,4 +15,6 @@ public interface TypeServiceRepo extends JpaRepository<TypeServiceModel, String>
     List<TypeServiceModel> findAll();
     Optional<TypeServiceModel> findById(String ID);
 
+    
+
 }
