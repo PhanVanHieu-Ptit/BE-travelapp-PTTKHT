@@ -148,6 +148,21 @@ public class ServiceService {
             );
     }
 
+    
+
+    // public ResponseEntity<ResponseObject> findAllGroupBy() {
+    //     List<ServiceModel> foundService = serviceRepo.findTop3Services();
+
+    //     return !foundService.isEmpty() ?
+    //         ResponseEntity.status(HttpStatus.OK).body(
+    //             new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundService)
+    //         )
+    //         :
+    //         ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+    //             new ResponseObject("failed", messageResponse.SELECT_FAILED, foundService)
+    //         );
+    // }
+
     public ResponseEntity<ResponseObject> findById(String id) {
         Optional<ServiceModel> foundService = serviceRepo.findById(id);
 

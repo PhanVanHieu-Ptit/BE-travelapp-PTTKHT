@@ -41,6 +41,17 @@ public class TypeServiceController {
         }
     }
 
+    // @GetMapping(path = "/top10")
+    // public ResponseEntity<ResponseObject> findTop3ByNumberServiceDesc() {
+    //     try {
+    //         return typeServiceService.findTop10();
+    //     } catch (Exception e) {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+    //             new ResponseObject("failed", messageResponse.SELECT_FAILED, new ArrayList<>())
+    //         );
+    //     }
+    // }
+
     @ApiOperation(value = "Insert a type service", notes = "")
     @PostMapping(path = "")
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
@@ -66,4 +77,6 @@ public class TypeServiceController {
             );
         }
     }
+
+    
 }

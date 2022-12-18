@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.thanhsang.travelapp.model.Service.ServiceModel;
@@ -26,6 +27,15 @@ public interface ServiceRepo extends JpaRepository<ServiceModel, Integer>{
     Page<ServiceModel> findAllByIdTypeService(String type, Pageable pageable) throws Exception;
 
     List<ServiceModel> findTop10ByOrderByStarDesc();
+    
+    
+    // @Query("select * from ("
+    // +"   SELECT services.id_type_service as type_service,count(services.id_type_service) as number_services"
+    // +"   FROM services GROUP BY services.id_type_service) as aTable "
+    // +"   order by aTable.number_services desc"
+    // +"   limit 3" )
+    // List<ServiceModel> findTop3Services();
+
     // @Transactional
     // @Modifying
     // @Query(name = "UPDATE Service SET name = ?2, unit ?3, " +
@@ -35,3 +45,4 @@ public interface ServiceRepo extends JpaRepository<ServiceModel, Integer>{
     // void updateService(int id, String name, String unit, int price, String phone, int numService, 
     //                     String picture, String images, String description, boolean activity);
 }
+

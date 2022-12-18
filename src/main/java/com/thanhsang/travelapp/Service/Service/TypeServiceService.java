@@ -32,6 +32,19 @@ public class TypeServiceService {
             );
     }
 
+    // public ResponseEntity<ResponseObject> findTop3() {
+    //     List<TypeServiceModel> foundTypeServices = typeServiceRepo.findTop10ByOrderByStarDesc();
+
+    //     return !foundTypeServices.isEmpty() ?
+    //         ResponseEntity.status(HttpStatus.OK).body(
+    //             new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundTypeServices)
+    //         )
+    //         :
+    //         ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+    //             new ResponseObject("failed", messageResponse.SELECT_FAILED, foundTypeServices)
+    //         );
+    // }
+
     public ResponseEntity<ResponseObject> insert(TypeServiceModel typeService) throws Exception {
         Optional<TypeServiceModel> foundTypeService = typeServiceRepo.findById(typeService.getId());
 
