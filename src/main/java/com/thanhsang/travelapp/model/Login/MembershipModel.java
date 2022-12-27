@@ -32,6 +32,15 @@ public class MembershipModel {
     private String sex;
     @Column(name = "activity", nullable = false)
     private boolean activity;
+    @Column(name= "email",length = 255)
+    private String email;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public MembershipModel() {
         this.id = "";
@@ -45,10 +54,11 @@ public class MembershipModel {
         this.linkFacebook = "";
         this.sex = "";
         this.activity = true;
+        this.email="";
     }
 
     public MembershipModel(String id, String role, String username, String password, String firstName, String lastName,
-            String avatar, String phone, String linkFacebook, String sex, boolean activity) {
+            String avatar, String phone, String linkFacebook, String sex, boolean activity,String email) {
         this.id = id;
         this.role = role;
         this.username = username;
@@ -60,6 +70,7 @@ public class MembershipModel {
         this.linkFacebook = linkFacebook;
         this.sex = sex;
         this.activity = activity;
+        this.email= email;
     }
 
     public void setId(String id) {

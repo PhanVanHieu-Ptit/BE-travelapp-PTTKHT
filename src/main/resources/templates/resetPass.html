@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quên mật khẩu</title>
+</head>
+
+<body>
+
+    <div class="container main">
+        <div class="container">
+            <label>Đặt lại mật khẩu</label>
+            <input type="password" class="input_pass" placeholder="Nhập mật khẩu mới" id="password" onkeyup="check()">
+            <input type="password" class="input_pass" placeholder="Nhập lại mật khẩu" onkeyup="check()"
+                id='confirm_password'>
+                <span id='message'></span>
+            <button class="button" id="btn" onclick="Send()">Xác nhận</button>
+        </div>
+    </div>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            width: 300px;
+            background-color: aliceblue;
+            border-radius: 30px;
+        }
+
+        .main {
+            border-radius: 0;
+            height: 100vh;
+            width: 100vw;
+            background-image: url('https://img.freepik.com/free-vector/pastel-ombre-background-pink-purple_53876-120750.jpg?w=740&t=st=1671894389~exp=1671894989~hmac=269961b634ac900072f6845ce336da6aee620bc0008619c7a6f81b8eea2ed15d');
+        }
+
+        .input_pass {
+            margin-top: 20px;
+            height: 30px;
+            width: 150px;
+            border-radius: 10px;
+        }
+
+        .button {
+            margin-top: 20px;
+            background-color: #fed3ed;
+            border-radius: 10px;
+            height: 30px;
+            width: 80px;
+        }
+
+        div {
+            border-width: 0.5px;
+        }
+    </style>
+    <script>
+        var check = function () {
+            var btn = document.getElementById('btn');
+       
+            if (document.getElementById('password').value ==
+                document.getElementById('confirm_password').value) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'Matching';
+                btn.disabled = false;
+            
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'Not matching';
+                btn.disabled = true;
+            }
+        }
+
+        async function Send() {
+            var url = window.location.href;
+            var access_token = url.slice(url.indexOf('token=') + 6, url.length);
+            var pass = document.getElementById("password").value;
+            fetch(url.slice(0, url.indexOf('token') - 1), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pass: pass, token: access_token })
+            }).then((res) => {
+                alert('xong')
+                return res.json();
+            }).then(data => {
+                console.log(data)
+            }).catch((err) => {
+                alert('thất bại');
+                console.log(err);
+            })
+        }
+
+    </script>
+</body>
+
+</html>
