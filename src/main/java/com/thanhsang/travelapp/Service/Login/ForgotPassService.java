@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.thanhsang.travelapp.Config.MailSender;
+import com.thanhsang.travelapp.Config.MailService;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Login.ForgotPassModel;
 import com.thanhsang.travelapp.model.Login.MembershipModel;
@@ -23,14 +22,15 @@ public class ForgotPassService {
     MembershipRepo membershipRepo;
     @Autowired
     ForgotPassRepo forgotPassRepo;
-
+    @Autowired
+    MailService mailSender;
     public ResponseEntity<ResponseObject> SendMail(JSONObject object) {
         try {
             String email = (String) object.get("email");
             Optional<MembershipModel> memberModel = membershipRepo.findByEmail(email);
             if (memberModel.isPresent()) {
                 String token = generateToken.createToken();
-                MailSender.sendmail(email, token);
+                mailSender.sendmail(email, token);
                 ForgotPassModel forgotPassModel = new ForgotPassModel(memberModel.get().getId(),
                         new Timestamp(System.currentTimeMillis()+(60 * 60 * 1000)), token, false); //cộng thêm 1 tiếng
                 forgotPassRepo.save(forgotPassModel);
