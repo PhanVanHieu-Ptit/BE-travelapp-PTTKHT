@@ -162,15 +162,13 @@ public class MembershipModel {
     }
 
     public boolean checkValid() {
-        if(this.getId() == null || this.getId().equals("") ||
+        if(
             this.getRole() == null || this.getRole().equals("") ||
             this.getUsername() == null || this.getUsername().equals("") ||
             this.getPassword() == null || this.getPassword().equals("") ||
             this.getFirstName() == null || this.getFirstName().equals("") ||
             this.getLastName() == null || this.getLastName().equals("") ||
-            this.getAvatar() == null || this.getAvatar().equals("") ||
-            this.getPhone() == null || this.getPhone().equals("") ||
-            this.getSex() == null || this.getSex().equals("")) {
+            this.getPhone() == null || this.getPhone().equals("")) {
                 
             return false;
         }

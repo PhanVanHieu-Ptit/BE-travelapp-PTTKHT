@@ -15,10 +15,13 @@ import com.thanhsang.travelapp.Define.MessageResponse;
 import com.thanhsang.travelapp.model.Adds.ResponseObject;
 import com.thanhsang.travelapp.model.Login.MembershipModel;
 import com.thanhsang.travelapp.repository.Login.MembershipRepo;
+import com.thanhsang.travelapp.util.encodePasswork;
+import com.thanhsang.travelapp.util.generateUUID;
 
 @Service
 public class MembershipService {
     
+    private encodePasswork encode = new encodePasswork();
     @Autowired MembershipRepo membershipRepo;
     private MessageResponse messageResponse = new MessageResponse();
 
@@ -43,6 +46,11 @@ public class MembershipService {
     public ResponseEntity<ResponseObject> insertMembership(MembershipModel membership) throws Exception {
         if(membership.checkValid() && membershipRepo.findByUsername(membership.getUsername()).isEmpty()) {
             membership.setUsername(membership.getUsername().toLowerCase());
+            membership.setId(generateUUID.generateUuid());
+            membership.setPassword(encode.encode(membership.getPassword()));
+            membership.setActivity(true);
+            membership.setLinkFacebook("");
+            membership.setAvatar("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS87Gr4eFO7Pt2pE8oym4dxXnxGZYL2Pl_N5A&usqp=CAU");
             membershipRepo.save(membership);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -73,8 +81,11 @@ public class MembershipService {
 
     public  ResponseEntity<ResponseObject> changePasswordMembership(String username, String oldPassword, String newPassword1, String newPassword2) throws Exception {
         Optional<MembershipModel> membership = membershipRepo.findByUsername(username.trim());
-        if(membership.isPresent() && membership.get().getPassword().equals(oldPassword) && newPassword1.equals(newPassword2)) {
-            membership.get().setPassword(newPassword2);
+        String encodePwOld = encode.encode(oldPassword);
+        String encodePwNew = encode.encode(newPassword1);
+
+        if(membership.isPresent() && membership.get().getPassword().equals(encodePwOld) && newPassword1.equals(newPassword2)) {
+            membership.get().setPassword(encodePwNew);
             membershipRepo.save(membership.get());
 
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -106,8 +117,8 @@ public class MembershipService {
 
     public ResponseEntity<ResponseObject> loginMembership(String username, String password) throws Exception {
         Optional<MembershipModel> membership = membershipRepo.findByUsername(username.toLowerCase());
-        
-        return membership.isPresent() && membership.get().getPassword().equals(password) && membership.get().getActivity() ?
+        String encodePW = encode.encode(password);
+        return membership.isPresent() && membership.get().getPassword().equals(encodePW) && membership.get().getActivity() ?
             ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("success", messageResponse.SELECT_SUCCESS, membership)
             )
@@ -138,7 +149,8 @@ public class MembershipService {
         Optional<MembershipModel> membership = membershipRepo.findById(id_membership);
         if(membership.isPresent()) {
             Long passwrod = System.currentTimeMillis()%999999;
-            membership.get().setPassword(String.valueOf(passwrod));
+            String encodePw = encode.encode(String.valueOf(passwrod));
+            membership.get().setPassword(String.valueOf(encodePw));
             membershipRepo.save(membership.get());
 
             return ResponseEntity.status(HttpStatus.OK).body(
