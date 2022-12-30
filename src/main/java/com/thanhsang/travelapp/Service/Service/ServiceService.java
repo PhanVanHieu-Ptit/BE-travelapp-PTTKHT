@@ -175,4 +175,16 @@ public class ServiceService {
                 new ResponseObject("failed", messageResponse.SELECT_FAILED, foundService)
             );
     }
+    public ResponseEntity<ResponseObject> findByIdMembership(String id) {
+        Optional<ServiceModel> foundService = serviceRepo.findByIdMembership(id);
+
+        return foundService.isPresent() ?
+            ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("success", messageResponse.SELECT_SUCCESS, foundService)
+            )
+            :
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, foundService)
+            );
+    }
 }
