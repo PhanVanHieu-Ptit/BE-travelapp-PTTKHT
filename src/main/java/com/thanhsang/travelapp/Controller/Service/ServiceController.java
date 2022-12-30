@@ -156,4 +156,16 @@ public class ServiceController {
         }
     }
 
+    @ApiOperation(value = "Find service by id membership", notes = "")
+    @GetMapping(path = "/idmemberships/{id}")
+    public ResponseEntity<ResponseObject> findByIdMembership(@PathVariable("id") String id) {
+        try {
+            return serviceService.findByIdMembership(id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("failed", messageResponse.SELECT_FAILED, new ArrayList<>())
+            );
+        }
+    }
+
 }
